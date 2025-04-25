@@ -1,12 +1,9 @@
 import NextAuth from "next-auth"
-import { PrismaAdapter } from "@auth/prisma-adapter"
-import { prisma } from "@/lib/prisma"
 import GoogleProvider from "next-auth/providers/google"
 import GitHubProvider from "next-auth/providers/github"
 import CredentialsProvider from "next-auth/providers/credentials"
 
 export const authOptions = {
-  adapter: PrismaAdapter(prisma),
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID || "",
@@ -27,27 +24,18 @@ export const authOptions = {
           return null
         }
 
-        try {
-          const user = await prisma.user.findUnique({
-            where: {
-              email: credentials.email,
-            },
-          })
-
-          if (!user) {
-            return null
+        // Pour la démonstration, nous retournons un utilisateur fictif
+        // Dans une application réelle, vous vérifieriez les identifiants dans la base de données
+        if (credentials.email === "demo@example.com" && credentials.password === "password") {
+          return {
+            id: "1",
+            name: "Demo User",
+            email: "demo@example.com",
+            image: "https://via.placeholder.com/150",
           }
-
-          // Dans une application réelle, vous auriez un champ password dans votre modèle User
-          // et compareriez le mot de passe ici
-          // const isPasswordValid = await compare(credentials.password, user.password);
-
-          // Pour l'instant, nous retournons simplement l'utilisateur
-          return user
-        } catch (error) {
-          console.error("Error in authorize function:", error)
-          return null
         }
+
+        return null
       },
     }),
   ],
@@ -60,7 +48,7 @@ export const authOptions = {
   callbacks: {
     async session({ session, token }) {
       if (token && session.user) {
-        session.user.id = token.sub
+        session.user.id = token.sub || "1"
       }
       return session
     },
