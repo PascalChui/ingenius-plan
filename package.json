@@ -61,7 +61,6 @@
     "@auth/core": "latest",
     "nodemailer": "latest",
     "react-native": "latest",
-    "prisma": "latest",
     "pg": "latest",
     "gel": "latest",
     "knex": "latest",
@@ -93,6 +92,7 @@
     "react-native-safe-area-context": "latest",
     "react-native-screens": "latest",
     "react-native-svg": "latest",
+    "prisma": "latest",
     "next-auth": "latest",
     "uuid": "latest",
     "@react-native-async-storage/async-storage": "latest",
@@ -100,11 +100,11 @@
     "socket.io": "latest",
     "socket.io-client": "latest",
     "drizzle-orm": "latest",
-    "@auth/prisma-adapter": "latest",
     "@react-navigation/bottom-tabs": "latest",
     "@react-navigation/native-stack": "latest",
     "expo-status-bar": "latest",
-    "lucide-react-native": "latest"
+    "lucide-react-native": "latest",
+    "@auth/prisma-adapter": "latest"
   },
   "devDependencies": {
     "@types/node": "^22",

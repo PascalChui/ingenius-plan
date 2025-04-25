@@ -27,22 +27,27 @@ export const authOptions = {
           return null
         }
 
-        const user = await prisma.user.findUnique({
-          where: {
-            email: credentials.email,
-          },
-        })
+        try {
+          const user = await prisma.user.findUnique({
+            where: {
+              email: credentials.email,
+            },
+          })
 
-        if (!user) {
+          if (!user) {
+            return null
+          }
+
+          // Dans une application réelle, vous auriez un champ password dans votre modèle User
+          // et compareriez le mot de passe ici
+          // const isPasswordValid = await compare(credentials.password, user.password);
+
+          // Pour l'instant, nous retournons simplement l'utilisateur
+          return user
+        } catch (error) {
+          console.error("Error in authorize function:", error)
           return null
         }
-
-        // Dans une application réelle, vous auriez un champ password dans votre modèle User
-        // et compareriez le mot de passe ici
-        // const isPasswordValid = await compare(credentials.password, user.password);
-
-        // Pour l'instant, nous retournons simplement l'utilisateur
-        return user
       },
     }),
   ],
